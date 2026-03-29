@@ -1,0 +1,388 @@
+/* ============================================
+   PORTFOLIO — ANIMATIONS
+   Cutting-edge: scroll-driven animations,
+   @property gradients, view() timeline,
+   spring easing, @starting-style
+   ============================================ */
+
+/* ── Keyframes ─────────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+@keyframes scrollLine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes gradientShift {
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
+}
+
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 10%, transparent); }
+  50% { box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 25%, transparent); }
+}
+
+/* ── Scroll-driven: page progress bar ──── */
+@keyframes progressBar {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+  transform-origin: left;
+  z-index: 10001;
+  animation: progressBar linear;
+  animation-timeline: scroll();
+}
+
+/* ── Scroll-driven: parallax grid ──────── */
+@keyframes parallaxGrid {
+  from { background-position: 0 0; }
+  to { background-position: 0 60px; }
+}
+
+.hero-bg-grid {
+  animation: parallaxGrid linear;
+  animation-timeline: scroll();
+  animation-range: 0vh 100vh;
+}
+
+/* ── Reveal on scroll ──────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+}
+
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ── Hero entrance animations ──────────── */
+.hero-title .line {
+  opacity: 0;
+  animation: fadeUp 0.9s var(--transition) forwards;
+}
+
+.line-1 { animation-delay: 0.1s; }
+.line-2 { animation-delay: 0.25s; }
+.line-3 { animation-delay: 0.4s; }
+
+.hero-eyebrow {
+  opacity: 0;
+  animation: fadeUp 0.7s var(--transition) 0.05s forwards;
+}
+
+.hero-name {
+  opacity: 0;
+  animation: fadeUp 0.7s var(--transition) 0.5s forwards;
+}
+
+.hero-sub {
+  opacity: 0;
+  animation: fadeUp 0.7s var(--transition) 0.6s forwards;
+}
+
+.hero-actions {
+  opacity: 0;
+  animation: fadeUp 0.7s var(--transition) 0.75s forwards;
+}
+
+.hero-meta {
+  opacity: 0;
+  animation: fadeUp 0.7s var(--transition) 0.9s forwards;
+}
+
+.scroll-indicator {
+  opacity: 0;
+  animation: fadeUp 0.7s var(--transition) 1.1s forwards;
+}
+
+.nav {
+  opacity: 0;
+  animation: fadeUp 0.6s var(--transition) 0.2s forwards;
+}
+
+/* ── Hero name shimmer effect ──────────── */
+@keyframes nameShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.hero-name-text {
+  background: linear-gradient(
+    90deg,
+    var(--text-3) 0%,
+    var(--text-3) 40%,
+    var(--accent) 50%,
+    var(--text-3) 60%,
+    var(--text-3) 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: nameShimmer 4s ease-in-out infinite 2s;
+}
+
+/* ── Project card hover glow ───────────── */
+.project-card {
+  transition: transform 0.4s var(--spring), box-shadow 0.4s var(--transition);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+/* ── Terminal type effect ──────────────── */
+.terminal-body code {
+  opacity: 0;
+  animation: fadeUp 0.5s var(--transition) 0.8s forwards;
+}
+
+/* ── Skill items stagger ───────────────── */
+.skill-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s, transform 0.4s var(--spring), color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.skills-grid.visible .skill-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Generate stagger delays for skills */
+.skill-group:nth-child(1) .skill-item:nth-child(1) { transition-delay: 0.05s; }
+.skill-group:nth-child(1) .skill-item:nth-child(2) { transition-delay: 0.1s; }
+.skill-group:nth-child(1) .skill-item:nth-child(3) { transition-delay: 0.15s; }
+.skill-group:nth-child(1) .skill-item:nth-child(4) { transition-delay: 0.2s; }
+.skill-group:nth-child(1) .skill-item:nth-child(5) { transition-delay: 0.25s; }
+.skill-group:nth-child(2) .skill-item:nth-child(1) { transition-delay: 0.1s; }
+.skill-group:nth-child(2) .skill-item:nth-child(2) { transition-delay: 0.15s; }
+.skill-group:nth-child(2) .skill-item:nth-child(3) { transition-delay: 0.2s; }
+.skill-group:nth-child(2) .skill-item:nth-child(4) { transition-delay: 0.25s; }
+.skill-group:nth-child(2) .skill-item:nth-child(5) { transition-delay: 0.3s; }
+.skill-group:nth-child(3) .skill-item:nth-child(1) { transition-delay: 0.15s; }
+.skill-group:nth-child(3) .skill-item:nth-child(2) { transition-delay: 0.2s; }
+.skill-group:nth-child(3) .skill-item:nth-child(3) { transition-delay: 0.25s; }
+.skill-group:nth-child(3) .skill-item:nth-child(4) { transition-delay: 0.3s; }
+.skill-group:nth-child(3) .skill-item:nth-child(5) { transition-delay: 0.35s; }
+.skill-group:nth-child(3) .skill-item:nth-child(6) { transition-delay: 0.4s; }
+.skill-group:nth-child(4) .skill-item:nth-child(1) { transition-delay: 0.2s; }
+.skill-group:nth-child(4) .skill-item:nth-child(2) { transition-delay: 0.25s; }
+.skill-group:nth-child(4) .skill-item:nth-child(3) { transition-delay: 0.3s; }
+.skill-group:nth-child(4) .skill-item:nth-child(4) { transition-delay: 0.35s; }
+.skill-group:nth-child(4) .skill-item:nth-child(5) { transition-delay: 0.4s; }
+.skill-group:nth-child(5) .skill-item:nth-child(1) { transition-delay: 0.25s; }
+.skill-group:nth-child(5) .skill-item:nth-child(2) { transition-delay: 0.3s; }
+.skill-group:nth-child(5) .skill-item:nth-child(3) { transition-delay: 0.35s; }
+.skill-group:nth-child(5) .skill-item:nth-child(4) { transition-delay: 0.4s; }
+.skill-group:nth-child(5) .skill-item:nth-child(5) { transition-delay: 0.45s; }
+.skill-group:nth-child(6) .skill-item:nth-child(1) { transition-delay: 0.3s; }
+.skill-group:nth-child(6) .skill-item:nth-child(2) { transition-delay: 0.35s; }
+.skill-group:nth-child(6) .skill-item:nth-child(3) { transition-delay: 0.4s; }
+.skill-group:nth-child(6) .skill-item:nth-child(4) { transition-delay: 0.45s; }
+.skill-group:nth-child(6) .skill-item:nth-child(5) { transition-delay: 0.5s; }
+
+/* ── Education card float ──────────────── */
+.edu-card {
+  animation: floatUp 6s ease-in-out infinite;
+}
+
+/* ── Award card glow ───────────────────── */
+.award-card {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* ── Timeline items entrance ───────────── */
+.timeline-item {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.6s var(--transition), transform 0.6s var(--spring);
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.timeline-item:nth-child(1) { transition-delay: 0.1s; }
+.timeline-item:nth-child(2) { transition-delay: 0.25s; }
+.timeline-item:nth-child(3) { transition-delay: 0.4s; }
+
+/* ── View-driven animations (sections) ── */
+@keyframes sectionFadeIn {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@supports (animation-timeline: view()) {
+  .section-label,
+  .section-title {
+    animation: sectionFadeIn both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+}
+
+/* ── Contact form submit animation ─────── */
+@keyframes submitPulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 40%, transparent); }
+  50% { box-shadow: 0 0 0 12px color-mix(in srgb, var(--accent) 0%, transparent); }
+}
+
+.btn-primary:active {
+  animation: submitPulse 0.4s ease;
+}
+
+/* ── Number counter ────────────────────── */
+.meta-num {
+  transition: all 0.3s;
+}
+
+/* ── Smooth theme transition ───────────── */
+@keyframes themeTransition {
+  from { filter: blur(4px); }
+  to { filter: blur(0); }
+}
+
+html.theme-transitioning * {
+  transition-duration: 0.5s !important;
+}
+
+/* ── Tag hover pop ─────────────────────── */
+@keyframes tagPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.tag:hover {
+  animation: tagPop 0.3s var(--spring);
+}
+
+/* ── Project card data-index counter ───── */
+.project-card::after {
+  content: attr(data-index);
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-family: var(--font-mono);
+  font-size: 64px;
+  font-weight: 800;
+  color: color-mix(in srgb, var(--text) 3%, transparent);
+  line-height: 1;
+  pointer-events: none;
+  transition: color 0.3s;
+}
+
+.project-card:hover::after {
+  color: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+/* ── Magnetic hover on buttons ─────────── */
+@keyframes magneticReturn {
+  to { transform: translate(0, 0); }
+}
+
+/* ── Stagger animation for project grid ── */
+@supports (animation-timeline: view()) {
+  .project-card {
+    animation: scaleIn both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 25%;
+  }
+}
