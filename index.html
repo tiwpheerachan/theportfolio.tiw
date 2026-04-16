@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GoodJob — We Build Systems That Scale</title>
-  <meta name="description" content="GoodJob is a Bangkok-based software studio specializing in AI-powered platforms, full-stack development, and data engineering. We ship production-grade systems fast.">
+  <title>ZipNow — We Build Systems That Scale</title>
+  <meta name="description" content="ZipNow is a Bangkok-based software studio specializing in AI-powered platforms, full-stack development, and data engineering. We ship production-grade systems fast.">
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/animations.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +25,14 @@
   <!-- Navigation -->
   <nav class="nav" id="nav">
     <div class="nav-logo">
-      <span class="logo-bracket">[</span>GoodJob<span class="logo-bracket">]</span>
+      <svg class="logo-svg" width="120" height="32" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Lightning bolt icon -->
+        <rect x="0" y="2" width="28" height="28" rx="7" fill="var(--accent)"/>
+        <path d="M17 6L10 18h5l-2 8 7-12h-5l2-8z" fill="var(--bg)" stroke="var(--bg)" stroke-width="0.5" stroke-linejoin="round"/>
+        <!-- Text -->
+        <text x="34" y="22" font-family="'Syne', sans-serif" font-weight="800" font-size="20" fill="currentColor">Zip</text>
+        <text x="63" y="22" font-family="'Syne', sans-serif" font-weight="800" font-size="20" fill="var(--accent)">Now</text>
+      </svg>
     </div>
     <ul class="nav-links">
       <li><a href="#about" data-i18n="nav.about">about</a></li>
@@ -89,7 +96,7 @@
         <span class="line line-3" data-i18n="hero.line3">That Scale.</span>
       </h1>
       <div class="hero-name">
-        <span class="hero-name-text">GOODJOB STUDIO</span>
+        <span class="hero-name-text">ZIPNOW STUDIO</span>
       </div>
       <p class="hero-sub" data-i18n="hero.sub">
         We architect production-grade platforms for ambitious businesses — HRMS, membership systems, booking engines, e-commerce pipelines, and AI-powered tools. From concept to 10,000+ users, we ship fast and we ship right.
@@ -134,7 +141,7 @@
       <div class="about-grid">
         <div class="about-text">
           <h2 class="section-title"><span data-i18n="about.title1">Small team.</span><br/><em data-i18n="about.title2">Massive output.</em></h2>
-          <p data-i18n="about.p1" data-i18n-html><strong>GoodJob</strong> is a Bangkok-based software studio that builds production-grade platforms for businesses who need things done right -- and fast. We specialize in full-stack development, AI integration, and data engineering.</p>
+          <p data-i18n="about.p1" data-i18n-html><strong>ZipNow</strong> is a Bangkok-based software studio that builds production-grade platforms for businesses who need things done right -- and fast. We specialize in full-stack development, AI integration, and data engineering.</p>
           <p data-i18n="about.p2" data-i18n-html>Our clients trust us to own the entire lifecycle: architecture, design, development, deployment, and ongoing operations. No handoffs, no gaps. We've shipped systems that serve hundreds of employees, thousands of customers, and millions of data records.</p>
           <div class="about-stack">
             <span>Next.js</span><span>TypeScript</span><span>Supabase</span><span>BigQuery</span><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>Claude AI</span>
@@ -146,11 +153,11 @@
               <span class="dot red"></span>
               <span class="dot yellow"></span>
               <span class="dot green"></span>
-              <span class="terminal-title">goodjob.config.json</span>
+              <span class="terminal-title">zipnow.config.json</span>
             </div>
             <div class="terminal-body">
               <pre><code><span class="c-bracket">{</span>
-  <span class="c-key">"studio"</span>: <span class="c-str">"GoodJob"</span>,
+  <span class="c-key">"studio"</span>: <span class="c-str">"ZipNow"</span>,
   <span class="c-key">"type"</span>: <span class="c-str">"Software Studio"</span>,
   <span class="c-key">"base"</span>: <span class="c-str">"Bangkok, Thailand"</span>,
   <span class="c-key">"focus"</span>: [
@@ -285,8 +292,8 @@
       <article class="project-card card-featured" data-index="01" data-project="hrms">
         <div class="project-preview">
           <div class="preview-placeholder" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)">
+            <img src="images/hrms/preview.png" alt="HRMS Platform Preview" class="preview-img" loading="lazy" />
             <div class="preview-overlay"><span class="preview-expand">&#8599; View Case Study</span></div>
-            <div class="preview-mockup"><div class="mockup-bar"></div><div class="mockup-content"><div class="mockup-sidebar"></div><div class="mockup-main"><div class="mockup-line w80"></div><div class="mockup-line w60"></div><div class="mockup-grid-3"><div class="mockup-card-sm"></div><div class="mockup-card-sm"></div><div class="mockup-card-sm"></div></div><div class="mockup-table"><div class="mockup-row"></div><div class="mockup-row"></div><div class="mockup-row"></div></div></div></div></div>
           </div>
         </div>
         <div class="project-tag-row">
@@ -312,8 +319,8 @@
       <article class="project-card" data-index="02" data-project="dreame">
         <div class="project-preview">
           <div class="preview-placeholder" style="background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%)">
+            <img src="images/dreame/preview.png" alt="Membership Platform Preview" class="preview-img" loading="lazy" />
             <div class="preview-overlay"><span class="preview-expand">&#8599; View Case Study</span></div>
-            <div class="preview-mockup"><div class="mockup-bar"></div><div class="mockup-content"><div class="mockup-main" style="width:100%"><div class="mockup-hero-block"></div><div class="mockup-grid-3"><div class="mockup-card-sm"></div><div class="mockup-card-sm"></div><div class="mockup-card-sm"></div></div><div class="mockup-line w80"></div><div class="mockup-progress"></div></div></div></div>
           </div>
         </div>
         <div class="project-tag-row"><span class="proj-tag">Next.js</span><span class="proj-tag">Supabase</span><span class="proj-tag">Membership</span></div>
@@ -336,8 +343,8 @@
       <article class="project-card card-dark" data-index="03" data-project="70mai">
         <div class="project-preview">
           <div class="preview-placeholder" style="background: linear-gradient(135deg, #2d3436 0%, #636e72 50%, #b2bec3 100%)">
+            <img src="images/70mai/preview.png" alt="Booking System Preview" class="preview-img" loading="lazy" />
             <div class="preview-overlay"><span class="preview-expand">&#8599; View Case Study</span></div>
-            <div class="preview-mockup"><div class="mockup-bar"></div><div class="mockup-content"><div class="mockup-main" style="width:100%"><div class="mockup-line w60"></div><div class="mockup-calendar"></div><div class="mockup-grid-2"><div class="mockup-card-sm"></div><div class="mockup-card-sm"></div></div></div></div></div>
           </div>
         </div>
         <div class="project-tag-row"><span class="proj-tag">Next.js</span><span class="proj-tag">Booking</span><span class="proj-tag">Supabase</span></div>
@@ -362,8 +369,8 @@
       <article class="project-card" data-index="04" data-project="shd">
         <div class="project-preview">
           <div class="preview-placeholder" style="background: linear-gradient(135deg, #1a1a2e 0%, #e94560 30%, #533483 100%)">
+            <img src="images/shd/preview.png" alt="Corporate & Careers Preview" class="preview-img" loading="lazy" />
             <div class="preview-overlay"><span class="preview-expand">&#8599; View Case Study</span></div>
-            <div class="preview-mockup"><div class="mockup-bar"></div><div class="mockup-content"><div class="mockup-main" style="width:100%"><div class="mockup-hero-block"></div><div class="mockup-line w80"></div><div class="mockup-line w60"></div><div class="mockup-grid-3"><div class="mockup-card-sm"></div><div class="mockup-card-sm"></div><div class="mockup-card-sm"></div></div></div></div></div>
           </div>
         </div>
         <div class="project-tag-row"><span class="proj-tag">Next.js</span><span class="proj-tag">Multilingual</span><span class="proj-tag">Recruitment</span></div>
@@ -389,8 +396,8 @@
       <article class="project-card card-featured" data-index="05" data-project="ecom">
         <div class="project-preview">
           <div class="preview-placeholder" style="background: linear-gradient(135deg, #0c0032 0%, #190061 50%, #240090 100%)">
+            <img src="images/ecom/preview.png" alt="E-Commerce Data Platform Preview" class="preview-img" loading="lazy" />
             <div class="preview-overlay"><span class="preview-expand">&#8599; View Case Study</span></div>
-            <div class="preview-mockup"><div class="mockup-bar"></div><div class="mockup-content"><div class="mockup-main" style="width:100%"><div class="mockup-line w60"></div><div class="mockup-chart"></div><div class="mockup-grid-3"><div class="mockup-card-sm"></div><div class="mockup-card-sm"></div><div class="mockup-card-sm"></div></div></div></div></div>
           </div>
         </div>
         <div class="project-tag-row"><span class="proj-tag">BigQuery</span><span class="proj-tag">Python</span><span class="proj-tag">Shopee API</span><span class="proj-tag">Lazada API</span><span class="proj-tag">TikTok API</span></div>
@@ -409,30 +416,7 @@
         </div>
       </article>
 
-      <!-- AI Query Engine -->
-      <article class="project-card card-dark" data-index="06" data-project="ai">
-        <div class="project-preview">
-          <div class="preview-placeholder" style="background: linear-gradient(135deg, #141e30 0%, #243b55 100%)">
-            <div class="preview-overlay"><span class="preview-expand">&#8599; View Case Study</span></div>
-            <div class="preview-mockup"><div class="mockup-bar"></div><div class="mockup-content"><div class="mockup-main" style="width:100%"><div class="mockup-chat"><div class="mockup-bubble-left"></div><div class="mockup-bubble-right"></div><div class="mockup-bubble-left"></div></div><div class="mockup-input-bar"></div></div></div></div>
-          </div>
-        </div>
-        <div class="project-tag-row"><span class="proj-tag">Anthropic API</span><span class="proj-tag">BigQuery</span><span class="proj-tag">NLP</span></div>
-        <div class="project-content">
-          <h3 class="project-title" data-i18n="proj.ai.title">AI Query Engine</h3>
-          <p class="project-desc" data-i18n="proj.ai.desc">Natural language to SQL engine. Business teams query e-commerce data in Thai or English without writing SQL. Claude AI-powered summarization.</p>
-          <ul class="project-highlights">
-            <li>Thai & English NLP support</li>
-            <li>SQL injection prevention via allowlist</li>
-            <li>Schema-aware context injection</li>
-            <li>Result summarization with Claude AI</li>
-          </ul>
-        </div>
-        <div class="project-footer">
-          <div class="project-meta"><span data-i18n="proj.client">Client Project</span><span>2025</span></div>
-          <div class="project-badge-row"><span class="project-badge badge-ai">AI-Powered</span></div>
-        </div>
-      </article>
+
 
     </div>
   </section>
@@ -485,8 +469,15 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container footer-inner">
-      <div class="footer-logo"><span class="logo-bracket">[</span>GoodJob<span class="logo-bracket">]</span></div>
-      <p class="footer-copy" data-i18n="footer.copy">&copy; 2025 GoodJob Studio -- Software Development & AI Integration, Bangkok</p>
+      <div class="footer-logo">
+        <svg class="logo-svg" width="120" height="32" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="2" width="28" height="28" rx="7" fill="var(--accent)"/>
+          <path d="M17 6L10 18h5l-2 8 7-12h-5l2-8z" fill="var(--bg)" stroke="var(--bg)" stroke-width="0.5" stroke-linejoin="round"/>
+          <text x="34" y="22" font-family="'Syne', sans-serif" font-weight="800" font-size="20" fill="currentColor">Zip</text>
+          <text x="63" y="22" font-family="'Syne', sans-serif" font-weight="800" font-size="20" fill="var(--accent)">Now</text>
+        </svg>
+      </div>
+      <p class="footer-copy" data-i18n="footer.copy">&copy; 2025 ZipNow Studio -- Software Development & AI Integration, Bangkok</p>
       <div class="footer-links">
         <a href="mailto:peerachantiw@gmail.com">Email</a>
         <a href="tel:+66820812421">082-081-2421</a>
@@ -519,6 +510,23 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-backdrop"></div>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg>
+    </button>
+    <div class="lightbox-stage" id="lightboxStage">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+    </div>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <div class="lightbox-strip" id="lightboxStrip"></div>
   </div>
 
   <script src="js/i18n.js"></script>

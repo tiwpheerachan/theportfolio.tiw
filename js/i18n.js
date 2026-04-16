@@ -1,5 +1,5 @@
 /* ============================================
-   GOODJOB — i18n TRANSLATIONS
+   ZIPNOW — i18n TRANSLATIONS
    Languages: en, th, zh, ja, es
    ============================================ */
 
@@ -41,11 +41,11 @@ const translations = {
   "about.title1": { en: "Small team.", th: "ทีมเล็ก.", zh: "小团队。", ja: "少数精鋭。", es: "Equipo pequeño." },
   "about.title2": { en: "Massive output.", th: "ผลงานยิ่งใหญ่.", zh: "巨大产出。", ja: "圧倒的な成果。", es: "Resultados masivos." },
   "about.p1": {
-    en: "<strong>GoodJob</strong> is a Bangkok-based software studio that builds production-grade platforms for businesses who need things done right -- and fast. We specialize in full-stack development, AI integration, and data engineering.",
-    th: "<strong>GoodJob</strong> คือซอฟต์แวร์สตูดิโอในกรุงเทพฯ ที่สร้างแพลตฟอร์มระดับ Production สำหรับธุรกิจที่ต้องการงานที่ทำได้ถูกต้อง -- และเร็ว เราเชี่ยวชาญ Full-Stack, AI Integration และ Data Engineering",
-    zh: "<strong>GoodJob</strong>是一家位于曼谷的软件工作室，为需要快速且正确完成工作的企业构建生产级平台。专注全栈开发、AI集成和数据工程。",
-    ja: "<strong>GoodJob</strong>はバンコクのソフトウェアスタジオ。正確かつ迅速に仕事を完了する必要がある企業のために本番グレードのプラットフォームを構築。フルスタック開発、AI統合、データエンジニアリングを専門とします。",
-    es: "<strong>GoodJob</strong> es un estudio de software en Bangkok que construye plataformas de producción para empresas que necesitan las cosas bien hechas -- y rápido. Nos especializamos en desarrollo full-stack, integración de IA e ingeniería de datos."
+    en: "<strong>ZipNow</strong> is a Bangkok-based software studio that builds production-grade platforms for businesses who need things done right -- and fast. We specialize in full-stack development, AI integration, and data engineering.",
+    th: "<strong>ZipNow</strong> คือซอฟต์แวร์สตูดิโอในกรุงเทพฯ ที่สร้างแพลตฟอร์มระดับ Production สำหรับธุรกิจที่ต้องการงานที่ทำได้ถูกต้อง -- และเร็ว เราเชี่ยวชาญ Full-Stack, AI Integration และ Data Engineering",
+    zh: "<strong>ZipNow</strong>是一家位于曼谷的软件工作室，为需要快速且正确完成工作的企业构建生产级平台。专注全栈开发、AI集成和数据工程。",
+    ja: "<strong>ZipNow</strong>はバンコクのソフトウェアスタジオ。正確かつ迅速に仕事を完了する必要がある企業のために本番グレードのプラットフォームを構築。フルスタック開発、AI統合、データエンジニアリングを専門とします。",
+    es: "<strong>ZipNow</strong> es un estudio de software en Bangkok que construye plataformas de producción para empresas que necesitan las cosas bien hechas -- y rápido. Nos especializamos en desarrollo full-stack, integración de IA e ingeniería de datos."
   },
   "about.p2": {
     en: "Our clients trust us to own the entire lifecycle: architecture, design, development, deployment, and ongoing operations. No handoffs, no gaps. We've shipped systems that serve hundreds of employees, thousands of customers, and millions of data records.",
@@ -202,7 +202,7 @@ const translations = {
   "contact.form.project": { en: "Tell us about your project", th: "เล่าเกี่ยวกับโปรเจกต์ของคุณ", zh: "告诉我们您的项目", ja: "プロジェクトについて教えてください", es: "Cuéntanos sobre tu proyecto" },
   "contact.form.send": { en: "Send Message", th: "ส่งข้อความ", zh: "发送消息", ja: "メッセージを送信", es: "Enviar Mensaje" },
   "contact.form.success": { en: "Message sent! We'll get back to you soon.", th: "ส่งข้อความแล้ว! เราจะติดต่อกลับเร็วๆ นี้", zh: "消息已发送！我们会尽快回复您。", ja: "メッセージを送信しました！すぐにご連絡します。", es: "Mensaje enviado! Te responderemos pronto." },
-  "footer.copy": { en: "GoodJob Studio -- Software Development & AI Integration, Bangkok", th: "GoodJob Studio -- พัฒนาซอฟต์แวร์ & AI Integration, กรุงเทพฯ", zh: "GoodJob Studio -- 软件开发与AI集成，曼谷", ja: "GoodJob Studio -- ソフトウェア開発＆AI統合、バンコク", es: "GoodJob Studio -- Desarrollo de Software e Integración IA, Bangkok" },
+  "footer.copy": { en: "ZipNow Studio -- Software Development & AI Integration, Bangkok", th: "ZipNow Studio -- พัฒนาซอฟต์แวร์ & AI Integration, กรุงเทพฯ", zh: "ZipNow Studio -- 软件开发与AI集成，曼谷", ja: "ZipNow Studio -- ソフトウェア開発＆AI統合、バンコク", es: "ZipNow Studio -- Desarrollo de Software e Integración IA, Bangkok" },
 
   // ── Modal ───────────────────────────────
   "modal.overview": { en: "Overview", th: "ภาพรวม", zh: "概述", ja: "概要", es: "Descripción" },

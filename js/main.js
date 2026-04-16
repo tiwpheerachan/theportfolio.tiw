@@ -4,7 +4,7 @@
    Ripple, Theme, i18n, Magnetic cursor
    ============================================ */
 
-// ── Project Detail Data (GoodJob Client Work) ──
+// ── Project Detail Data (ZipNow Client Work) ──
 const projectData = {
   hrms: {
     title: 'HRMS Platform',
@@ -118,28 +118,6 @@ const projectData = {
     tech: ['Python', 'BigQuery', 'Shopee API', 'Lazada API', 'TikTok API', 'SQL', 'Cloud Functions'],
     links: [],
     gradient: 'linear-gradient(135deg, #0c0032 0%, #190061 50%, #240090 100%)'
-  },
-  ai: {
-    title: 'AI Query Engine',
-    desc: 'A natural language to SQL engine we built so business teams can query e-commerce data in plain Thai or English -- no SQL knowledge required. Uses the Anthropic API (Claude) to interpret intent, generates validated SQL against BigQuery, and returns results with AI-powered summarization.',
-    role: 'We designed the NLP-to-SQL pipeline, implemented schema-aware context injection, built the SQL allowlist validation system, and integrated Claude AI for both query generation and result summarization.',
-    highlights: [
-      'Thai & English natural language support',
-      'SQL injection prevention via allowlist validation',
-      'Schema-aware context injection for accuracy',
-      'Result summarization with Claude AI',
-      'Direct BigQuery integration',
-      'Used daily by client\'s business teams'
-    ],
-    metrics: [
-      { num: '2', label: 'Languages' },
-      { num: '0', label: 'SQL Knowledge Needed' },
-      { num: '↑', label: 'Team Productivity' },
-      { num: '100%', label: 'Injection Prevention' }
-    ],
-    tech: ['Anthropic API', 'BigQuery', 'Python', 'SQL', 'NLP', 'FastAPI'],
-    links: [],
-    gradient: 'linear-gradient(135deg, #141e30 0%, #243b55 100%)'
   }
 };
 
@@ -512,22 +490,99 @@ document.addEventListener('DOMContentLoaded', () => {
       linksEl.style.display = 'none';
     }
 
-    // Gallery — Main placeholder with gradient
+    // Gallery — collect all images for lightbox
     const mainImg = document.getElementById('modalImgMain');
-    mainImg.innerHTML = `
-      <div class="modal-placeholder" style="background: ${data.gradient}">
-        <span class="modal-placeholder-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
-        <span>Add your screenshot here</span>
-        <span style="font-size:10px; opacity:0.5;">Replace with: &lt;img src="images/${projectId}-1.png"&gt;</span>
-      </div>`;
-
-    // Thumbnails
     const thumbs = document.getElementById('modalImgThumbs');
-    thumbs.innerHTML = [1, 2, 3].map((n, i) =>
-      `<div class="modal-thumb ${i === 0 ? 'active' : ''}" style="background: ${data.gradient}; opacity: ${i === 0 ? 1 : 0.4}">
-        <span style="font-size:12px; color: rgba(255,255,255,0.4)">${n}</span>
-      </div>`
-    ).join('');
+    mainImg.classList.remove('is-portrait');
+    mainImg.innerHTML = '';
+    thumbs.innerHTML = '';
+
+    const allImages = [];  // [{src, alt}] — filled as images load
+    let currentMainIndex = 0;
+
+    // helper: set main preview image
+    function setMainImage(src, alt, index) {
+      mainImg.classList.remove('is-portrait');
+      const oldImg = mainImg.querySelector('img');
+      if (oldImg) oldImg.style.opacity = '0';
+      const newImg = new Image();
+      newImg.src = src;
+      newImg.alt = alt || data.title;
+      newImg.style.cssText = 'cursor:pointer; opacity:0;';
+      newImg.onload = () => {
+        if (newImg.naturalHeight > newImg.naturalWidth) mainImg.classList.add('is-portrait');
+        if (oldImg) oldImg.remove();
+        mainImg.appendChild(newImg);
+        requestAnimationFrame(() => { newImg.style.opacity = '1'; });
+      };
+      newImg.onerror = () => newImg.remove();
+      // click main image → open lightbox
+      newImg.addEventListener('click', () => {
+        if (allImages.length) window.openLightbox(allImages, index != null ? index : currentMainIndex);
+      });
+      if (index != null) currentMainIndex = index;
+    }
+
+    // helper: activate thumb
+    function activateThumb(el) {
+      thumbs.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+
+    // Load preview as first image
+    const previewSrc = `images/${projectId}/preview.png`;
+    const previewTest = new Image();
+    previewTest.src = previewSrc;
+    previewTest.onload = () => {
+      allImages.push({ src: previewSrc, alt: data.title + ' — Preview' });
+      setMainImage(previewSrc, data.title, 0);
+    };
+    previewTest.onerror = () => {
+      mainImg.innerHTML = `<div class="modal-placeholder" style="background: ${data.gradient}"><span style="color:var(--text-3);font-size:13px;">No preview available</span></div>`;
+    };
+
+    // Load thumbnails 1–20
+    for (let n = 1; n <= 20; n++) {
+      const src = `images/${projectId}/thumb-${n}.png`;
+      const thumbEl = document.createElement('div');
+      thumbEl.className = 'modal-thumb';
+
+      const img = new Image();
+      img.src = src;
+      img.alt = `${data.title} — Screenshot ${n}`;
+      img.onload = () => {
+        const ratio = img.naturalWidth / img.naturalHeight;
+        const isPortrait = ratio < 0.85;
+        if (isPortrait) {
+          thumbEl.classList.add('is-portrait');
+          thumbEl.style.width = Math.round(100 * ratio) + 'px';
+        } else {
+          thumbEl.style.width = Math.round(80 * ratio) + 'px';
+        }
+        thumbEl.appendChild(img);
+        thumbs.appendChild(thumbEl);
+
+        // track in allImages
+        const imgIndex = allImages.length;
+        allImages.push({ src, alt: img.alt });
+
+        // click thumb → update main + open lightbox on double
+        thumbEl.addEventListener('click', () => {
+          activateThumb(thumbEl);
+          setMainImage(src, img.alt, imgIndex);
+        });
+
+        // double-click thumb → open lightbox directly
+        thumbEl.addEventListener('dblclick', () => {
+          window.openLightbox(allImages, imgIndex);
+        });
+
+        // first thumb auto-activate
+        if (thumbs.children.length === 1) thumbEl.classList.add('active');
+      };
+      img.onerror = () => { /* skip missing */ };
+    }
 
     // Open
     modal.classList.add('open');
@@ -630,5 +685,94 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!localStorage.getItem('portfolio-theme')) {
     setTheme(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   }
+
+  // ══════════════════════════════════════
+  //  LIGHTBOX — full-screen image viewer
+  // ══════════════════════════════════════
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCounter = document.getElementById('lightboxCounter');
+  const lbStrip = document.getElementById('lightboxStrip');
+  const lbPrev = document.getElementById('lightboxPrev');
+  const lbNext = document.getElementById('lightboxNext');
+  let lbImages = [];   // [{src, alt}]
+  let lbIndex = 0;
+
+  // Public: open lightbox with array of images at given index
+  window.openLightbox = function(images, startIndex) {
+    lbImages = images;
+    lbIndex = startIndex || 0;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    renderLightbox();
+    buildStrip();
+  };
+
+  function renderLightbox() {
+    const item = lbImages[lbIndex];
+    lbImg.classList.add('loading');
+    lbImg.onload = () => lbImg.classList.remove('loading');
+    lbImg.src = item.src;
+    lbImg.alt = item.alt || '';
+    lbCounter.textContent = `${lbIndex + 1} / ${lbImages.length}`;
+
+    // update nav state
+    lbPrev.classList.toggle('disabled', lbIndex === 0);
+    lbNext.classList.toggle('disabled', lbIndex === lbImages.length - 1);
+
+    // update strip active
+    lbStrip.querySelectorAll('.lightbox-strip-thumb').forEach((t, i) => {
+      t.classList.toggle('active', i === lbIndex);
+      if (i === lbIndex) t.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+  }
+
+  function buildStrip() {
+    lbStrip.innerHTML = '';
+    lbImages.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'lightbox-strip-thumb' + (i === lbIndex ? ' active' : '');
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.alt || '';
+      img.onload = () => {
+        const ratio = img.naturalWidth / img.naturalHeight;
+        div.style.width = Math.round(52 * ratio) + 'px';
+      };
+      div.appendChild(img);
+      div.addEventListener('click', () => { lbIndex = i; renderLightbox(); });
+      lbStrip.appendChild(div);
+    });
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = 'hidden'; // keep project modal's overflow
+  }
+
+  lbPrev.addEventListener('click', () => { if (lbIndex > 0) { lbIndex--; renderLightbox(); } });
+  lbNext.addEventListener('click', () => { if (lbIndex < lbImages.length - 1) { lbIndex++; renderLightbox(); } });
+
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.querySelector('.lightbox-backdrop').addEventListener('click', closeLightbox);
+
+  // keyboard: arrows + escape
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft' && lbIndex > 0) { lbIndex--; renderLightbox(); }
+    if (e.key === 'ArrowRight' && lbIndex < lbImages.length - 1) { lbIndex++; renderLightbox(); }
+  });
+
+  // swipe support for mobile
+  let touchStartX = 0;
+  lightbox.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  lightbox.addEventListener('touchend', (e) => {
+    const diff = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(diff) > 50) {
+      if (diff < 0 && lbIndex < lbImages.length - 1) { lbIndex++; renderLightbox(); }
+      if (diff > 0 && lbIndex > 0) { lbIndex--; renderLightbox(); }
+    }
+  }, { passive: true });
 
 });
