@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>วิเคราะห์คะแนน TCAS69 - สายสุขภาพ & คณะแนะนำ</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans Thai', sans-serif; background: #f0f4f8; color: #1a202c; line-height: 1.6; }
+  .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+  .header { background: linear-gradient(135deg, #1e3a5f, #2d6a9f); color: white; padding: 30px; border-radius: 16px; margin-bottom: 24px; text-align: center; }
+  .header h1 { font-size: 1.6em; font-weight: 700; margin-bottom: 8px; }
+  .header p { opacity: 0.85; font-size: 0.95em; }
+
+  .score-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+  .score-card { background: white; border-radius: 12px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .score-card .subject { font-size: 0.8em; color: #718096; margin-bottom: 4px; }
+  .score-card .score { font-size: 1.5em; font-weight: 700; }
+  .score-card .percentile { font-size: 0.75em; color: #a0aec0; }
+  .score-card.high .score { color: #22863a; }
+  .score-card.mid .score { color: #d69e2e; }
+  .score-card.low .score { color: #e53e3e; }
+
+  .section { background: white; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .section h2 { font-size: 1.2em; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; }
+  .section h2 span { font-size: 1.2em; margin-right: 8px; }
+
+  .program { border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; margin-bottom: 12px; position: relative; }
+  .program.chance-high { border-left: 4px solid #38a169; }
+  .program.chance-mid { border-left: 4px solid #d69e2e; }
+  .program.chance-low { border-left: 4px solid #e53e3e; }
+
+  .program-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .program-name { font-weight: 600; font-size: 1em; }
+  .program-uni { font-size: 0.85em; color: #718096; }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.75em; font-weight: 600; }
+  .badge-high { background: #c6f6d5; color: #22543d; }
+  .badge-mid { background: #fefcbf; color: #744210; }
+  .badge-low { background: #fed7d7; color: #742a2a; }
+
+  .detail-row { display: flex; justify-content: space-between; font-size: 0.85em; padding: 4px 0; }
+  .detail-label { color: #718096; }
+  .detail-value { font-weight: 500; }
+
+  .formula { background: #f7fafc; border-radius: 8px; padding: 10px; margin-top: 8px; font-size: 0.82em; color: #4a5568; }
+
+  .note-box { background: #fffff0; border: 1px solid #fefcbf; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+  .note-box h3 { color: #d69e2e; font-size: 0.95em; margin-bottom: 8px; }
+  .note-box p, .note-box li { font-size: 0.85em; color: #744210; }
+  .note-box ul { padding-left: 20px; }
+
+  .warning-box { background: #fff5f5; border: 1px solid #fed7d7; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+  .warning-box h3 { color: #c53030; font-size: 0.95em; margin-bottom: 8px; }
+  .warning-box p { font-size: 0.85em; color: #742a2a; }
+
+  .bar { height: 8px; background: #e2e8f0; border-radius: 4px; margin-top: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  .bar-fill.green { background: linear-gradient(90deg, #48bb78, #38a169); }
+  .bar-fill.yellow { background: linear-gradient(90deg, #ecc94b, #d69e2e); }
+  .bar-fill.red { background: linear-gradient(90deg, #fc8181, #e53e3e); }
+
+  .sources { font-size: 0.8em; color: #a0aec0; margin-top: 20px; padding-top: 16px; border-top: 1px solid #e2e8f0; }
+  .sources a { color: #4299e1; text-decoration: none; }
+
+  @media (max-width: 600px) { .score-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>วิเคราะห์โอกาสสมัคร TCAS69 รอบ 3 Admission</h1>
+    <p>คะแนน A-Level ปี 2569 | สอบ 14-16 มีนาคม 2569</p>
+  </div>
+
+  <!-- Score Cards -->
+  <div class="score-grid">
+    <div class="score-card high"><div class="subject">Bio ชีววิทยา</div><div class="score">46.40</div><div class="percentile">Percentile 86.71</div></div>
+    <div class="score-card high"><div class="subject">Thai ภาษาไทย</div><div class="score">64.00</div><div class="percentile">Percentile 76.24</div></div>
+    <div class="score-card high"><div class="subject">Math2 คณิต 2</div><div class="score">49.00</div><div class="percentile">Percentile 74.64</div></div>
+    <div class="score-card mid"><div class="subject">Eng ภาษาอังกฤษ</div><div class="score">43.75</div><div class="percentile">Percentile 58.52</div></div>
+    <div class="score-card mid"><div class="subject">Sci วิทย์ประยุกต์</div><div class="score">48.80</div><div class="percentile">Percentile 53.73</div></div>
+    <div class="score-card mid"><div class="subject">Chem เคมี</div><div class="score">17.50</div><div class="percentile">Percentile 30.59</div></div>
+    <div class="score-card low"><div class="subject">Soc สังคม</div><div class="score">30.00</div><div class="percentile">Percentile 13.77</div></div>
+    <div class="score-card low"><div class="subject">Math1 คณิต 1</div><div class="score">12.00</div><div class="percentile">Percentile 12.76</div></div>
+    <div class="score-card low"><div class="subject">Phy ฟิสิกส์</div><div class="score">17.00</div><div class="percentile">Percentile 11.86</div></div>
+  </div>
+
+  <div class="warning-box">
+    <h3>&#9888;&#65039; ข้อมูลที่ยังขาด</h3>
+    <p>จากรูปมีเฉพาะคะแนน A-Level เท่านั้น ยังขาด <strong>คะแนน TGAT, TPAT</strong> และ <strong>GPAX (เกรดเฉลี่ย)</strong> ซึ่งหลายคณะใช้ร่วมคำนวณด้วย การวิเคราะห์นี้จะคำนวณเฉพาะส่วน A-Level และประเมินโอกาสเบื้องต้นค่ะ</p>
+  </div>
+
+  <!-- SECTION 1: สายสุขภาพ โอกาสสูง -->
+  <div class="section">
+    <h2><span>&#127973;</span> สายสุขภาพ - โอกาสดี</h2>
+
+    <div class="program chance-high">
+      <div class="program-header">
+        <div>
+          <div class="program-name">1. พยาบาลศาสตร์ - ม.แม่ฟ้าหลวง</div>
+          <div class="program-uni">สำนักวิชาพยาบาลศาสตร์ | 40 ที่นั่ง (รอบ 3)</div>
+        </div>
+        <span class="badge badge-high">โอกาสดี</span>
+      </div>
+      <div class="detail-row"><span class="detail-label">เกณฑ์ขั้นต่ำ:</span><span class="detail-value">เคมี &#8805; 15, Bio &#8805; 20, ไทย &#8805; 30, อังกฤษ &#8805; 30</span></div>
+      <div class="detail-row"><span class="detail-label">คะแนนของคุณ:</span><span class="detail-value" style="color:#22863a">เคมี 17.5 &#10004;, Bio 46.4 &#10004;, ไทย 64.0 &#10004;, อังกฤษ 43.75 &#10004;</span></div>
+      <div class="formula">
+        <strong>สูตร:</strong> เคมี 25% + Bio 25% + ไทย 25% + อังกฤษ 25%<br>
+        <strong>คะแนนคำนวณ:</strong> (17.5 + 46.4 + 64.0 + 43.75) &divide; 4 = <strong>42.91</strong><br>
+        <strong>คะแนนต่ำสุดปี 68:</strong> ~43.93 | <strong>ผลต่าง:</strong> ต่ำกว่า ~1.02 จุด<br>
+        <em>&#128161; ใกล้มากๆ! อยู่ในเขตแข่งขัน ถ้าปีนี้คะแนนตัดต่ำลงมีโอกาสติด</em>
+      </div>
+      <div class="bar"><div class="bar-fill yellow" style="width:85%"></div></div>
+    </div>
+
+    <div class="program chance-high">
+      <div class="program-header">
+        <div>
+          <div class="program-name">2. พยาบาลศาสตร์ - สถาบันพระบรมราชชนก (สบช.)</div>
+          <div class="program-uni">กระทรวงสาธารณสุข | 517+ ที่นั่ง ทั่วประเทศ | หลายวิทยาเขต</div>
+        </div>
+        <span class="badge badge-high">โอกาสดี</span>
+      </div>
+      <div class="detail-row"><span class="detail-label">GPAX ขั้นต่ำ:</span><span class="detail-value">&#8805; 2.50</span></div>
+      <div class="detail-row"><span class="detail-label">A-Level ขั้นต่ำ:</span><span class="detail-value">แต่ละวิชา &#8805; 10 คะแนน</span></div>
+      <div class="detail-row"><span class="detail-label">คะแนนของคุณ:</span><span class="detail-value" style="color:#22863a">ผ่านเกณฑ์ขั้นต่ำทุกวิชา &#10004;</span></div>
+      <div class="formula">
+        <strong>สัดส่วน:</strong> GPAX 10% + TGAT 40% + A-Level 50%<br>
+        <strong>จุดเด่น:</strong> มีที่นั่งมาก (500+ ทั่วประเทศ) และมีวิทยาเขตภาคเหนือ<br>
+        <strong>คะแนนต่ำสุดปี 68 (บางวิทยาเขต):</strong> ~41-57 คะแนน<br>
+        <em>&#128161; เลือกวิทยาเขตที่คะแนนไม่สูงมาก เช่น ภาคเหนือ/อีสาน จะมีโอกาสสูง</em>
+      </div>
+      <div class="bar"><div class="bar-fill green" style="width:80%"></div></div>
+    </div>
+
+    <div class="program chance-mid">
+      <div class="program-header">
+        <div>
+          <div class="program-name">3. สาธารณสุขศาสตร์ (อนามัยชุมชน/ทันตสาธารณสุข) - สบช.</div>
+          <div class="program-uni">สถาบันพระบรมราชชนก | 255 ที่นั่ง</div>
+        </div>
+        <span class="badge badge-high">โอกาสดี</span>
+      </div>
+      <div class="detail-row"><span class="detail-label">GPAX ขั้นต่ำ:</span><span class="detail-value">&#8805; 2.00</span></div>
+      <div class="detail-row"><span class="detail-label">สัดส่วน:</span><span class="detail-value">GPAX 20% + วิชาเฉพาะ GPA 30% + TGAT 20% + A-Level 30%</span></div>
+      <div class="formula">
+        <strong>จุดเด่น:</strong> เกณฑ์ GPAX ต่ำกว่าพยาบาล, A-Level ใช้แค่ 30%<br>
+        <em>&#128161; ถ้า GPAX &#8805; 2.50 และ TGAT พอใช้ได้ มีโอกาสดีมาก</em>
+      </div>
+      <div class="bar"><div class="bar-fill green" style="width:82%"></div></div>
+    </div>
+
+    <div class="program chance-mid">
+      <div class="program-header">
+        <div>
+          <div class="program-name">4. สาธารณสุขศาสตร์ - ม.พะเยา</div>
+          <div class="program-uni">คณะสาธารณสุขศาสตร์ | สาขาอนามัยชุมชน/อาชีวอนามัย</div>
+        </div>
+        <span class="badge badge-mid">พอมีโอกาส</span>
+      </div>
+      <div class="detail-row"><span class="detail-label">สัดส่วน:</span><span class="detail-value">ใช้ TGAT + A-Level (Bio, เคมี, อังกฤษ เป็นหลัก)</span></div>
+      <div class="formula">
+        <strong>จุดเด่น:</strong> ม.พะเยาอยู่ใกล้เชียงราย เดินทางสะดวก<br>
+        <strong>คะแนนต่ำสุดรอบ 3 ปี 68:</strong> สาธารณสุขมักอยู่ที่ ~35-45 คะแนน<br>
+        <em>&#128161; Bio สูง (Percentile 86.7) เป็นจุดแข็งมาก ขึ้นอยู่กับ TGAT ด้วย</em>
+      </div>
+      <div class="bar"><div class="bar-fill yellow" style="width:70%"></div></div>
+    </div>
+
+    <div class="program chance-mid">
+      <div class="program-header">
+        <div>
+          <div class="program-name">5. พยาบาลศาสตร์ - ม.พะเยา</div>
+          <div class="program-uni">คณะพยาบาลศาสตร์</div>
+        </div>
+        <span class="badge badge-mid">พอมีโอกาส</span>
+      </div>
+      <div class="detail-row"><span class="detail-label">สัดส่วน:</span><span class="detail-value">ใช้ TGAT + A-Level (คล้าย ม.แม่ฟ้าหลวง)</span></div>
+      <div class="formula">
+        <em>&#128161; ม.พะเยาคะแนนตัดมักใกล้เคียงหรือต่ำกว่า ม.เชียงใหม่ เหมาะเป็นตัวเลือกคู่</em>
+      </div>
+      <div class="bar"><div class="bar-fill yellow" style="width:65%"></div></div>
+    </div>
+
+    <div class="program chance-mid">
+      <div class="program-header">
+        <div>
+          <div class="program-name">6. เทคโนโลยีเวชระเบียน / ฉุกเฉินการแพทย์ - สบช.</div>
+          <div class="program-uni">สถาบันพระบรมราชชนก | 25-20 ที่นั่ง</div>
+        </div>
+        <span class="badge badge-mid">พอมีโอกาส</span>
+      </div>
+      <div class="detail-row"><span class="detail-label">GPAX ขั้นต่ำ:</span><span class="detail-value">เวชระเบียน &#8805; 2.00 | ฉุกเฉิน &#8805; 2.50</span></div>
+      <div class="formula">
+        <strong>จุดเด่น:</strong> เกณฑ์ไม่สูง, เป็นสายสุขภาพที่มีงานรองรับดี<br>
+        <em>&#128161; เวชระเบียน GPAX ต่ำสุดแค่ 2.00 เหมาะเป็นตัวเลือกสำรอง</em>
+      </div>
+      <div class="bar"><div class="bar-fill yellow" style="width:70%"></div></div>
+    </div>
+  </div>
+
+  <!-- สายสุขภาพ โอกาสน้อย -->
+  <div class="section">
+    <h2><span>&#9888;&#65039;</span> สายสุขภาพ - ยากหน่อย (ต้องดู TGAT ประกอบ)</h2>
+
+    <div class="program chance-low">
+      <div class="program-header">
+        <div>
+          <div class="program-name">เภสัชศาสตร์</div>
+          <div class="program-uni">ทุกมหาวิทยาลัย</div>
+        </div>
+        <span class="badge badge-low">ยาก</span>
+      </div>
+      <div class="formula">
+        <strong>เหตุผล:</strong> ใช้ Math1 + เคมี เป็นหลัก (รวม 40-60%)<br>
+        คะแนนต่ำสุดปี 68: ~58-61 คะแนน | Math1 ของคุณ = 12, เคมี = 17.5<br>
+        <em>คะแนน Math1 และ เคมี ต่ำเกินไปสำหรับเภสัชศาสตร์</em>
+      </div>
+    </div>
+
+    <div class="program chance-low">
+      <div class="program-header">
+        <div>
+          <div class="program-name">เทคนิคการแพทย์</div>
+          <div class="program-uni">ม.เชียงใหม่ / จุฬาฯ / มหิดล</div>
+        </div>
+        <span class="badge badge-low">ยาก</span>
+      </div>
+      <div class="formula">
+        <strong>เหตุผล:</strong> ใช้เคมี 30% + Bio 30% + Math1 10%<br>
+        คะแนนต่ำสุดปี 68: ~48-57 คะแนน | เคมีของคุณ 17.5 จะฉุดคะแนนรวมลงมาก
+      </div>
+    </div>
+
+    <div class="program chance-low">
+      <div class="program-header">
+        <div>
+          <div class="program-name">กายภาพบำบัด / รังสีเทคนิค</div>
+          <div class="program-uni">ส่วนใหญ่ใช้ฟิสิกส์ + เคมี</div>
+        </div>
+        <span class="badge badge-low">ยาก</span>
+      </div>
+      <div class="formula">
+        <strong>เหตุผล:</strong> ฟิสิกส์ 17.0 และเคมี 17.5 ต่ำเกินไป<br>
+        รังสีเทคนิคใช้ฟิสิกส์ 25-30% ซึ่งเป็นจุดอ่อนสำคัญ
+      </div>
+    </div>
+
+    <div class="program chance-mid">
+      <div class="program-header">
+        <div>
+          <div class="program-name">พยาบาลศาสตร์ - ม.เชียงใหม่</div>
+          <div class="program-uni">คณะพยาบาลศาสตร์</div>
+        </div>
+        <span class="badge badge-mid">ท้าทาย</span>
+      </div>
+      <div class="formula">
+        <strong>สัดส่วน:</strong> TGAT 30% + Math1 10% + เคมี 15% + Bio 25% + อังกฤษ 20%<br>
+        <strong>ส่วน A-Level:</strong> 12&times;0.10 + 17.5&times;0.15 + 46.4&times;0.25 + 43.75&times;0.20 = <strong>24.18</strong> (จาก 70%)<br>
+        <em>&#128161; ต้องการ TGAT สูงมาก (~70+) ถึงจะมีโอกาส เพราะ Math1 และเคมีฉุดไว้</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: คณะอื่นๆ -->
+  <div class="section">
+    <h2><span>&#127891;</span> คณะอื่นๆ ที่แนะนำ (นอกสายแพทย์)</h2>
+
+    <div class="program chance-high">
+      <div class="program-header">
+        <div>
+          <div class="program-name">7. คณะศึกษาศาสตร์ / ครุศาสตร์ (สาขาชีววิทยา/วิทยาศาสตร์ทั่วไป)</div>
+          <div class="program-uni">ม.เชียงใหม่ / ม.พะเยา / ราชภัฏเชียงราย</div>
+        </div>
+        <span class="badge badge-high">โอกาสดี</span>
+      </div>
+      <div class="formula">
+        <strong>จุดเด่น:</strong> Bio สูง + ภาษาไทยสูง เหมาะกับครูสอนวิทย์/ชีววิทยา<br>
+        คะแนนตัดมักไม่สูงมาก โดยเฉพาะราชภัฏ<br>
+        <em>&#128161; จบแล้วมีงานทำแน่นอน ขาดแคลนครูวิทย์ทั่วประเทศ</em>
+      </div>
+      <div class="bar"><div class="bar-fill green" style="width:85%"></div></div>
+    </div>
+
+    <div class="program chance-high">
+      <div class="program-header">
+        <div>
+          <div class="program-name">8. คณะวิทยาศาสตร์ (สาขาชีววิทยา/จุลชีววิทยา/เทคโนโลยีชีวภาพ)</div>
+          <div class="program-uni">ม.แม่ฟ้าหลวง / ม.เชียงใหม่ / ม.พะเยา</div>
+        </div>
+        <span class="badge badge-high">โอกาสดี</span>
+      </div>
+      <div class="formula">
+        <strong>จุดเด่น:</strong> Bio Percentile 86.7 เป็นจุดแข็งหลัก<br>
+        สาขาชีววิทยา/จุลชีวฯ มักใช้ Bio + เคมี + อังกฤษ โดยให้น้ำหนัก Bio สูง<br>
+        <em>&#128161; สามารถต่อยอดเข้าป.โทสายสุขภาพหรือวิจัยได้</em>
+      </div>
+      <div class="bar"><div class="bar-fill green" style="width:80%"></div></div>
+    </div>
+
+    <div class="program chance-high">
+      <div class="program-header">
+        <div>
+          <div class="program-name">9. คณะเกษตรศาสตร์ / วิทยาศาสตร์อาหาร</div>
+          <div class="program-uni">ม.เชียงใหม่ / ม.แม่โจ้ / ม.พะเยา</div>
+        </div>
+        <span class="badge badge-high">โอกาสดี</span>
+      </div>
+      <div class="formula">
+        <strong>จุดเด่น:</strong> ใช้ Bio + วิทย์ประยุกต์ เป็นหลัก ซึ่งเป็นจุดแข็งของคุณ<br>
+        คะแนนตัดมักต่ำกว่าสายสุขภาพมาก<br>
+        <em>&#128161; Food Science เป็นสาขาที่ตลาดงานดีมากในภาคเหนือ</em>
+      </div>
+      <div class="bar"><div class="bar-fill green" style="width:88%"></div></div>
+    </div>
+
+    <div class="program chance-high">
+      <div class="program-header">
+        <div>
+          <div class="program-name">10. คณะมนุษยศาสตร์ (ภาษาไทย/ภาษาอังกฤษ)</div>
+          <div class="program-uni">ม.เชียงใหม่ / ม.พะเยา / ราชภัฏเชียงราย</div>
+        </div>
+        <span class="badge badge-high">โอกาสดี</span>
+      </div>
+      <div class="formula">
+        <strong>จุดเด่น:</strong> ภาษาไทย 64.0 (Percentile 76.24) เป็นจุดแข็ง<br>
+        สาขาภาษาไทย/นิเทศศาสตร์ ใช้คะแนนภาษาไทย + อังกฤษ เป็นหลัก<br>
+        <em>&#128161; เหมาะมากถ้าชอบด้านภาษา สื่อสาร การเขียน</em>
+      </div>
+      <div class="bar"><div class="bar-fill green" style="width:82%"></div></div>
+    </div>
+
+    <div class="program chance-mid">
+      <div class="program-header">
+        <div>
+          <div class="program-name">11. คณะสิ่งแวดล้อม / วิทยาศาสตร์สิ่งแวดล้อม</div>
+          <div class="program-uni">ม.เชียงใหม่ / ม.แม่ฟ้าหลวง</div>
+        </div>
+        <span class="badge badge-mid">พอมีโอกาส</span>
+      </div>
+      <div class="formula">
+        <strong>จุดเด่น:</strong> ใช้ Bio + วิทย์ประยุกต์ + อังกฤษ<br>
+        <em>&#128161; สาขาที่กำลังเติบโต โดยเฉพาะในภาคเหนือที่มีปัญหา PM2.5</em>
+      </div>
+      <div class="bar"><div class="bar-fill yellow" style="width:72%"></div></div>
+    </div>
+  </div>
+
+  <!-- แนะนำการจัดอันดับ -->
+  <div class="section">
+    <h2><span>&#127942;</span> แนะนำการจัดอันดับ 10 อันดับ (รอบ 3 Admission)</h2>
+    <p style="font-size:0.9em; color:#718096; margin-bottom:16px;">เรียงจากอันดับ 1 (อยากติดมากสุด) ถึง 10 (ตัวเลือกสำรอง) โดยผสมความชอบสายสุขภาพ + โอกาสติด</p>
+
+    <div style="counter-reset: rank;">
+      <div class="program chance-high" style="counter-increment: rank;">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 1: พยาบาลศาสตร์ - ม.แม่ฟ้าหลวง</div></div>
+          <span class="badge badge-high">&#9733; ตัวเต็ง</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">ไม่ใช้ TGAT, คะแนนใกล้ cutoff มาก, อยู่เชียงราย</span></div>
+      </div>
+      <div class="program chance-high">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 2: พยาบาลศาสตร์ - สบช. (วิทยาเขตภาคเหนือ)</div></div>
+          <span class="badge badge-high">ที่นั่งเยอะ</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">517 ที่นั่งทั่วประเทศ, เลือกวิทยาเขตคะแนนไม่สูง</span></div>
+      </div>
+      <div class="program chance-high">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 3: สาธารณสุขศาสตร์ (อนามัยชุมชน) - สบช.</div></div>
+          <span class="badge badge-high">GPAX ต่ำ</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">GPAX &#8805; 2.00 เท่านั้น, 155 ที่นั่ง</span></div>
+      </div>
+      <div class="program chance-mid">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 4: สาธารณสุขศาสตร์ - ม.พะเยา</div></div>
+          <span class="badge badge-mid">ใกล้บ้าน</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">อยู่ใกล้เชียงราย, Bio สูงช่วยได้มาก</span></div>
+      </div>
+      <div class="program chance-mid">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 5: พยาบาลศาสตร์ - ม.พะเยา</div></div>
+          <span class="badge badge-mid">สำรองพยาบาล</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">เผื่อไม่ติด ม.แม่ฟ้าหลวง</span></div>
+      </div>
+      <div class="program chance-mid">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 6: ฉุกเฉินการแพทย์ / เวชระเบียน - สบช.</div></div>
+          <span class="badge badge-mid">สายสุขภาพ</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">สายสุขภาพเกณฑ์ไม่สูง มีงานรองรับ</span></div>
+      </div>
+      <div class="program chance-high">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 7: วิทยาศาสตร์อาหาร/เกษตร - ม.เชียงใหม่/แม่โจ้</div></div>
+          <span class="badge badge-high">ตลาดงานดี</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">คะแนน Bio + วิทย์สูง ตลาดงานดีมาก</span></div>
+      </div>
+      <div class="program chance-high">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 8: ศึกษาศาสตร์ (สอนชีววิทยา) - ม.เชียงใหม่/ราชภัฏ</div></div>
+          <span class="badge badge-high">โอกาสสูง</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">เหมาะกับโปรไฟล์มาก จบแล้วมีงานแน่</span></div>
+      </div>
+      <div class="program chance-high">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 9: วิทยาศาสตร์ (ชีววิทยา/จุลชีวฯ) - ม.แม่ฟ้าหลวง</div></div>
+          <span class="badge badge-high">ต่อยอดได้</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">คะแนนตัดไม่สูง + ต่อยอดเข้าสายสุขภาพป.โทได้</span></div>
+      </div>
+      <div class="program chance-high">
+        <div class="program-header">
+          <div><div class="program-name">อันดับ 10: มนุษยศาสตร์ (ภาษาไทย) - ม.เชียงใหม่/พะเยา</div></div>
+          <span class="badge badge-high">สำรองท้าย</span>
+        </div>
+        <div class="detail-row"><span class="detail-label">เหตุผล:</span><span class="detail-value">ภาษาไทย Percentile 76.2 เป็นจุดแข็ง</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <h3>&#128221; สิ่งที่ต้องทำต่อ</h3>
+    <ul>
+      <li><strong>เช็คคะแนน TGAT/TPAT</strong> - หลายคณะใช้ TGAT 20-40% ถ้า TGAT สูงจะช่วยชดเชยจุดอ่อนได้มาก</li>
+      <li><strong>คำนวณคะแนนจริง</strong> ที่ <a href="https://www.dek-d.com/tcas/calculator/" style="color:#d69e2e">Dek-D คำนวณคะแนน</a> หรือ <a href="https://monkeyeveryday.com/tcas/ranking" style="color:#d69e2e">MonkeyEveryday จัดอันดับ</a></li>
+      <li><strong>ดูเกณฑ์ TCAS69 รอบ 3</strong> ที่ <a href="https://www.mytcas.com" style="color:#d69e2e">mytcas.com</a> เปิดรับสมัคร 6-12 พ.ค. 2569</li>
+      <li><strong>จัดอันดับ 10 อันดับ</strong> ให้ดี ใช้หลัก "3 ตัวเต็ง + 4 ตัวพอไหว + 3 ตัวสำรอง"</li>
+      <li><strong>เตรียมสมัครรอบ 4</strong> (รับตรงอิสระ) เป็นแผนสำรอง โดยเฉพาะ สบช. มักเปิดรับเพิ่ม</li>
+    </ul>
+  </div>
+
+  <div class="sources">
+    <strong>แหล่งข้อมูลอ้างอิง:</strong><br>
+    <a href="https://www.mytcas.com/stat/">MyTCAS สถิติการสอบ</a> |
+    <a href="https://tcaster.net/tcas-news/general-news/tcas68-admission-nurse-criterion/">TCASter เกณฑ์พยาบาล TCAS68</a> |
+    <a href="https://www.smartmathpro.com/score-mfu/">SmartMathPro คะแนน ม.แม่ฟ้าหลวง</a> |
+    <a href="https://dekuni.com/tcas3-pi69/">DekUni สบช. TCAS69</a> |
+    <a href="https://www.sangfans.com/stat-tcasadmission/">Sangfans คะแนนย้อนหลัง</a> |
+    <a href="https://tcas.in.th/">TCAS Starter</a> |
+    <a href="https://www.smartmathpro.com/article/calculate-admission-score/">SmartMathPro สูตรคำนวณ</a><br>
+    <em>* ข้อมูลอิงจากเกณฑ์ TCAS68/69 คะแนนตัดจริงอาจเปลี่ยนแปลงในแต่ละปี</em>
+  </div>
+
+</div>
+</body>
+</html>

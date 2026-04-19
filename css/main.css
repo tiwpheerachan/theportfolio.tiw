@@ -267,17 +267,26 @@
 }
 
 .nav-logo {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
   cursor: default;
 }
 
-.logo-bracket {
-  color: var(--accent);
-  transition: color 0.3s;
+.logo-img {
+  height: 44px;
+  width: auto;
+  display: block;
 }
+
+.footer-logo .logo-img {
+  height: 36px;
+}
+
+/* dark theme (default) → show logo-for-dark, hide logo-for-light */
+[data-theme="dark"] .logo-for-dark  { display: block; }
+[data-theme="dark"] .logo-for-light { display: none;  }
+
+/* light theme → show logo-for-light, hide logo-for-dark */
+[data-theme="light"] .logo-for-dark  { display: none;  }
+[data-theme="light"] .logo-for-light { display: block; }
 
 .nav-links {
   display: flex;
@@ -627,6 +636,27 @@
 .hero-name {
   margin-bottom: 24px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero-logo-badge {
+  flex-shrink: 0;
+}
+
+.hero-logo-img {
+  height: 56px;
+  width: auto;
+  border-radius: 12px;
+}
+
+[data-theme="dark"] .hero-logo-img {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+[data-theme="light"] .hero-logo-img {
+  box-shadow: none;
 }
 
 .hero-name-text {

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>วิเคราะห์โอกาสติด จุฬาฯ ธรรมศาสตร์ มช. มหิดล | TCAS69</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans Thai', sans-serif; background: #f0f4f8; color: #1a202c; line-height: 1.7; }
+  .container { max-width: 920px; margin: 0 auto; padding: 20px; }
+  .header { background: linear-gradient(135deg, #7b2d8e, #c0392b, #e67e22, #27ae60); color: white; padding: 28px; border-radius: 16px; margin-bottom: 24px; text-align: center; }
+  .header h1 { font-size: 1.5em; font-weight: 700; margin-bottom: 6px; }
+  .header p { opacity: 0.9; font-size: 0.9em; }
+
+  .note { background: #fff3cd; border: 1px solid #ffc107; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; font-size: 0.88em; color: #664d03; }
+
+  .uni-section { background: white; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+  .uni-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 3px solid; }
+  .uni-header h2 { font-size: 1.15em; font-weight: 700; }
+  .uni-header .emoji { font-size: 1.4em; }
+  .cu .uni-header { border-color: #e91e8c; }
+  .tu .uni-header { border-color: #e74c3c; }
+  .cmu .uni-header { border-color: #8e44ad; }
+  .mu .uni-header { border-color: #2980b9; }
+
+  .program { border: 1px solid #e8ecf1; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+  .program.good { border-left: 4px solid #27ae60; background: #f0fdf4; }
+  .program.maybe { border-left: 4px solid #f39c12; background: #fffbeb; }
+  .program.hard { border-left: 4px solid #e74c3c; background: #fef2f2; }
+
+  .prog-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .prog-name { font-weight: 600; font-size: 0.95em; }
+  .badge { padding: 2px 10px; border-radius: 20px; font-size: 0.72em; font-weight: 600; white-space: nowrap; }
+  .badge-green { background: #d1fae5; color: #065f46; }
+  .badge-yellow { background: #fef3c7; color: #92400e; }
+  .badge-red { background: #fee2e2; color: #991b1b; }
+
+  .prog-detail { font-size: 0.83em; color: #4a5568; }
+  .prog-detail strong { color: #1a202c; }
+  .prog-score { display: flex; gap: 16px; font-size: 0.82em; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #e2e8f0; }
+  .prog-score span { display: inline-flex; align-items: center; gap: 4px; }
+  .score-label { color: #718096; }
+  .score-val { font-weight: 600; }
+
+  .tip { font-size: 0.82em; color: #6b7280; font-style: italic; margin-top: 4px; }
+
+  .summary-box { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+  .summary-box h2 { font-size: 1.15em; margin-bottom: 12px; }
+  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .summary-card { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 12px; }
+  .summary-card .num { font-size: 1.5em; font-weight: 700; }
+  .summary-card .label { font-size: 0.82em; opacity: 0.85; }
+
+  .sources { font-size: 0.78em; color: #a0aec0; margin-top: 20px; padding-top: 14px; border-top: 1px solid #e2e8f0; }
+  .sources a { color: #4299e1; text-decoration: none; }
+
+  @media (max-width: 600px) { .summary-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>วิเคราะห์โอกาสติด 4 มหาวิทยาลัยดัง</h1>
+  <p>จุฬาฯ | ธรรมศาสตร์ | ม.เชียงใหม่ | มหิดล — อิงคะแนนต่ำสุด TCAS68 รอบ 3</p>
+</div>
+
+<div class="note">
+  <strong>&#9888;&#65039; หมายเหตุสำคัญ:</strong> คะแนน "ต่ำสุด" ในรายงานนี้คือ <strong>คะแนนรวมถ่วงน้ำหนัก</strong> (รวม TGAT/TPAT + A-Level ตามสัดส่วน) ไม่ใช่คะแนน A-Level ล้วนๆ ดังนั้นต้องใช้ <strong>คะแนน TGAT</strong> คำนวณด้วยจึงจะเทียบได้จริง คะแนนต่ำสุดที่แสดงนี้มาจากข้อมูลจริงของ TCAS68 รอบ 3 ครั้งที่ 2 จาก MyTCAS<br><br>
+  <strong>คะแนน A-Level ของคุณ:</strong> Bio 46.4 | Thai 64.0 | Math2 49.0 | Eng 43.75 | Sci 48.8 | Chem 17.5 | Soc 30.0 | Math1 12.0 | Phy 17.0
+</div>
+
+<div class="summary-box">
+  <h2>&#128202; สรุปภาพรวมจุดแข็ง-จุดอ่อน</h2>
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="num">&#10004; จุดแข็ง</div>
+      <div class="label">Bio (Percentile 86.7), ภาษาไทย (76.2), Math2 (74.6), วิทย์ประยุกต์ (53.7), อังกฤษ (58.5) — เหมาะกับคณะที่ใช้วิชาเหล่านี้</div>
+    </div>
+    <div class="summary-card">
+      <div class="num">&#10008; จุดอ่อน</div>
+      <div class="label">Math1 (12), ฟิสิกส์ (17), เคมี (17.5), สังคม (30) — หลีกเลี่ยงคณะที่ให้น้ำหนัก Math1/ฟิสิกส์/เคมี สูง</div>
+    </div>
+  </div>
+</div>
+
+<!-- จุฬาลงกรณ์มหาวิทยาลัย -->
+<div class="uni-section cu">
+  <div class="uni-header">
+    <span class="emoji">&#127982;</span>
+    <h2>จุฬาลงกรณ์มหาวิทยาลัย</h2>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะอักษรศาสตร์</div>
+      <span class="badge badge-yellow">ท้าทาย</span>
+    </div>
+    <div class="prog-detail">
+      <strong>สัดส่วน:</strong> A-Level คณิต2 (25%) + อังกฤษ (25%) + สังคม (25%) + ไทย (25%)<br>
+      <strong>คะแนนของคุณ:</strong> (49×0.25)+(43.75×0.25)+(30×0.25)+(64×0.25) = <strong>46.69</strong>
+    </div>
+    <div class="prog-score">
+      <span><span class="score-label">คะแนนต่ำสุดปี 68:</span> <span class="score-val">~76.56</span></span>
+    </div>
+    <div class="tip">&#128308; สูงเกินไปมาก เพราะอักษรจุฬาไม่ใช้ TGAT ใช้แต่ A-Level ล้วน คะแนนรวม 46.69 ต่ำกว่าเกณฑ์ ~30 คะแนน</div>
+  </div>
+
+  <div class="program hard">
+    <div class="prog-top">
+      <div class="prog-name">คณะนิเทศศาสตร์</div>
+      <span class="badge badge-red">ยาก</span>
+    </div>
+    <div class="prog-detail">
+      <strong>สัดส่วน:</strong> TGAT (40%) + A-Level คณิต2 (60%)<br>
+      <strong>ส่วน A-Level:</strong> 49×0.60 = 29.40 (จาก 60%)<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~85.27
+    </div>
+    <div class="tip">&#128308; คะแนนตัดสูงมาก ต้อง TGAT เกือบเต็ม + Math2 สูงมาก</div>
+  </div>
+
+  <div class="program hard">
+    <div class="prog-top">
+      <div class="prog-name">คณะครุศาสตร์ (มัธยมศึกษา-วิชาเอกชีววิทยา)</div>
+      <span class="badge badge-red">ยากมาก</span>
+    </div>
+    <div class="prog-detail">
+      <strong>คะแนนต่ำสุดปี 68:</strong> 57.77<br>
+      ใช้ TGAT + TPAT5 + A-Level หลายวิชา สัดส่วนแต่ละปีอาจต่างกัน
+    </div>
+    <div class="tip">&#128308; แม้ Bio สูง แต่ครุศาสตร์จุฬาคะแนนตัดสูงมากทุกสาขา</div>
+  </div>
+
+  <div class="program hard">
+    <div class="prog-top">
+      <div class="prog-name">คณะวิทยาศาสตร์</div>
+      <span class="badge badge-red">ยาก</span>
+    </div>
+    <div class="prog-detail">
+      ส่วนใหญ่ใช้ Math1 + เคมี + ฟิสิกส์ เป็นหลัก ซึ่งเป็นจุดอ่อนของคุณ<br>
+      <strong>คะแนนต่ำสุดปี 68 (สาขาต่ำสุด):</strong> ~45-55
+    </div>
+    <div class="tip">&#128308; Math1 (12) และเคมี (17.5) ต่ำเกินไปสำหรับคณะวิทย์จุฬา</div>
+  </div>
+
+  <div class="program hard">
+    <div class="prog-top">
+      <div class="prog-name">สรุป: จุฬาลงกรณ์มหาวิทยาลัย</div>
+      <span class="badge badge-red">โอกาสต่ำ</span>
+    </div>
+    <div class="prog-detail">
+      จุฬาฯ เป็นมหาวิทยาลัยที่คะแนนตัดสูงที่สุดในประเทศ คณะส่วนใหญ่ต้องการคะแนนรวมถ่วงน้ำหนัก 50-85+ คะแนน ซึ่งสูงเกินไปสำหรับโปรไฟล์ปัจจุบัน โดยเฉพาะเมื่อ Math1, เคมี, ฟิสิกส์ ต่ำ
+    </div>
+  </div>
+</div>
+
+<!-- ธรรมศาสตร์ -->
+<div class="uni-section tu">
+  <div class="uni-header">
+    <span class="emoji">&#127961;</span>
+    <h2>มหาวิทยาลัยธรรมศาสตร์</h2>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะวิทยาศาสตร์ฯ — สาขาวิทยาศาสตร์สิ่งแวดล้อม</div>
+      <span class="badge badge-yellow">พอมีโอกาส</span>
+    </div>
+    <div class="prog-detail">
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~12.58 (คะแนนถ่วงน้ำหนัก ค่อนข้างต่ำ)<br>
+      สาขานี้คะแนนตัดต่ำมากเพราะสมัครไม่เยอะ ใช้ A-Level วิทย์ + เคมี + Math1 เป็นหลัก
+    </div>
+    <div class="tip">&#128993; ถ้า TGAT ดีพอ อาจมีโอกาส แต่ต้องดูสัดส่วนจริงปี 69</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะวิทยาศาสตร์ฯ — สาขาวาริชศาสตร์ (Aquatic Science)</div>
+      <span class="badge badge-yellow">พอมีโอกาส</span>
+    </div>
+    <div class="prog-detail">
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~10.00 (ต่ำมาก มีที่นั่งเหลือ)<br>
+      เกี่ยวข้องกับชีววิทยาทางน้ำ Bio เป็นจุดแข็ง
+    </div>
+    <div class="tip">&#128994; คะแนนตัดต่ำมาก มีโอกาสดี!</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะเกษตรศาสตร์ฯ — วิทยาศาสตร์การเกษตร</div>
+      <span class="badge badge-green">โอกาสดี</span>
+    </div>
+    <div class="prog-detail">
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~10.00-13.85 (หลายสาขาต่ำมาก)<br>
+      สาขา: เกษตรแม่นยำ, ภูมิศาสตร์, เทคโนโลยีประมง — ล้วนใช้ Bio/วิทย์<br>
+      <strong>วิทยาเขต:</strong> ลำปาง/พิษณุโลก (บางสาขา)
+    </div>
+    <div class="tip">&#128994; Bio สูง + คะแนนตัดต่ำ = โอกาสดีมาก! แนะนำเป็นตัวเลือก</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะวารสารศาสตร์และสื่อสารมวลชน</div>
+      <span class="badge badge-yellow">ท้าทาย</span>
+    </div>
+    <div class="prog-detail">
+      <strong>สัดส่วน:</strong> TGAT (10%) + Math2 (20%) + Eng (25%) + สังคม (25%) + ไทย (20%)<br>
+      <strong>ส่วน A-Level:</strong> 49×0.20 + 43.75×0.25 + 30×0.25 + 64×0.20 = <strong>41.24</strong> (จาก 90%)<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~66.41
+    </div>
+    <div class="tip">&#128308; คะแนนตัดสูง ยากสำหรับโปรไฟล์นี้</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะสาธารณสุขศาสตร์</div>
+      <span class="badge badge-yellow">ต้องดู TGAT</span>
+    </div>
+    <div class="prog-detail">
+      ม.ธรรมศาสตร์มีคณะสาธารณสุขฯ ที่ใช้ TGAT + A-Level Bio + เคมี + อังกฤษ<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ประมาณ 30-45 (ขึ้นกับสาขา)
+    </div>
+    <div class="tip">&#128993; ถ้า TGAT สูง มีโอกาส โดยเฉพาะสาขาอนามัยฯ</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะสังคมสงเคราะห์ศาสตร์</div>
+      <span class="badge badge-yellow">ต้องดู TGAT</span>
+    </div>
+    <div class="prog-detail">
+      ใช้ TGAT สูงถึง 30-50% + A-Level ภาษาไทย + อังกฤษ + สังคม<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ประมาณ 40-50
+    </div>
+    <div class="tip">&#128993; ภาษาไทยสูงช่วยได้ แต่สังคม 30 คะแนนอาจฉุด</div>
+  </div>
+
+  <div class="program good">
+    <div class="prog-top">
+      <div class="prog-name">คณะพยาบาลศาสตร์ ม.ธรรมศาสตร์</div>
+      <span class="badge badge-yellow">ต้องดู TGAT</span>
+    </div>
+    <div class="prog-detail">
+      <strong>สัดส่วน (ตัวอย่าง):</strong> TGAT 30% + Math2 10% + Sci 20% + Bio 30% + Eng 10%<br>
+      <strong>ส่วน A-Level:</strong> 49×0.10 + 48.8×0.20 + 46.4×0.30 + 43.75×0.10 = <strong>32.96</strong> (จาก 70%)<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~21.94 (ต่ำมาก! น่าจะเป็นรอบที่ 2 ที่มีที่เหลือ)
+    </div>
+    <div class="tip">&#128994; มีโอกาสถ้า TGAT ดีพอ! สมัครรอบ 3 ครั้งที่ 2 จะมีโอกาสมากขึ้น</div>
+  </div>
+</div>
+
+<!-- มหาวิทยาลัยเชียงใหม่ -->
+<div class="uni-section cmu">
+  <div class="uni-header">
+    <span class="emoji">&#127968;</span>
+    <h2>มหาวิทยาลัยเชียงใหม่</h2>
+  </div>
+
+  <div class="program good">
+    <div class="prog-top">
+      <div class="prog-name">คณะเกษตรศาสตร์ — สาขาเกษตรศาสตร์ / สัตวศาสตร์</div>
+      <span class="badge badge-green">โอกาสดี</span>
+    </div>
+    <div class="prog-detail">
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~20-25 (หลายสาขา)<br>
+      ใช้ Bio + วิทย์ประยุกต์ + อังกฤษ เป็นหลัก ซึ่งเป็นจุดแข็งของคุณ
+    </div>
+    <div class="tip">&#128994; Bio Percentile 86.7 + อยู่ภาคเหนือ = โอกาสสูงมาก!</div>
+  </div>
+
+  <div class="program good">
+    <div class="prog-top">
+      <div class="prog-name">คณะอุตสาหกรรมเกษตร — วิทยาศาสตร์อาหาร / เทคโนโลยีชีวภาพ</div>
+      <span class="badge badge-green">โอกาสดี</span>
+    </div>
+    <div class="prog-detail">
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~22-30 (ขึ้นกับสาขา)<br>
+      Food Science / Biotech ใช้ Bio + เคมี + วิทย์ประยุกต์
+    </div>
+    <div class="tip">&#128994; ตลาดงานดีมากในภาคเหนือ อุตสาหกรรมอาหารเติบโตสูง</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะวิทยาศาสตร์ — สาขาชีววิทยา / จุลชีววิทยา</div>
+      <span class="badge badge-yellow">พอมีโอกาส</span>
+    </div>
+    <div class="prog-detail">
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~25-35 (ขึ้นกับสาขา)<br>
+      สาขาชีววิทยาใช้ Bio เป็นวิชาหลัก + เคมี + Math1<br>
+      เคมี 17.5 และ Math1 12.0 อาจฉุดคะแนน
+    </div>
+    <div class="tip">&#128993; ถ้า TGAT ช่วยชดเชยจุดอ่อนได้ มีโอกาส</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะศึกษาศาสตร์ — สาขาชีววิทยา / วิทยาศาสตร์ทั่วไป</div>
+      <span class="badge badge-yellow">ต้องดู TGAT+TPAT5</span>
+    </div>
+    <div class="prog-detail">
+      ใช้ TGAT + TPAT5 + A-Level Bio/วิทย์/อังกฤษ<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~35-45 (คะแนนตัดต่ำกว่าจุฬา/มหิดล)
+    </div>
+    <div class="tip">&#128993; ครูชีววิทยาขาดแคลน จบแล้วมีงานทำ ถ้า TPAT5 ดีจะมีโอกาส</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะมนุษยศาสตร์ — สาขาภาษาไทย</div>
+      <span class="badge badge-yellow">พอมีโอกาส</span>
+    </div>
+    <div class="prog-detail">
+      ภาษาไทย 64 (Percentile 76.2) เป็นจุดแข็งหลัก<br>
+      ส่วนใหญ่ใช้ TGAT + A-Level ไทย + อังกฤษ + สังคม/Math2<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~40-55
+    </div>
+    <div class="tip">&#128993; สังคม 30 อาจฉุดบ้าง แต่ไทย 64 ช่วยชดเชยได้</div>
+  </div>
+
+  <div class="program hard">
+    <div class="prog-top">
+      <div class="prog-name">คณะพยาบาลศาสตร์ มช.</div>
+      <span class="badge badge-red">ท้าทายมาก</span>
+    </div>
+    <div class="prog-detail">
+      <strong>สัดส่วน:</strong> TGAT 30% + Math1 10% + เคมี 15% + Bio 25% + Eng 20%<br>
+      <strong>ส่วน A-Level:</strong> 12×0.10 + 17.5×0.15 + 46.4×0.25 + 43.75×0.20 = <strong>24.18</strong><br>
+      ต้องการ TGAT ~80+ ถึงจะรวมถึง ~48 คะแนน<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~43-48
+    </div>
+    <div class="tip">&#128308; Math1 (12) และเคมี (17.5) ฉุดหนัก ต้อง TGAT สูงมากๆ</div>
+  </div>
+
+  <div class="program good">
+    <div class="prog-top">
+      <div class="prog-name">คณะสิ่งแวดล้อม / วิทยาศาสตร์สิ่งแวดล้อม</div>
+      <span class="badge badge-green">โอกาสดี</span>
+    </div>
+    <div class="prog-detail">
+      ใช้ Bio + วิทย์ประยุกต์ + อังกฤษ<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~25-35
+    </div>
+    <div class="tip">&#128994; สาขาที่กำลังเติบโตมาก โดยเฉพาะปัญหา PM2.5 ในภาคเหนือ</div>
+  </div>
+</div>
+
+<!-- มหาวิทยาลัยมหิดล -->
+<div class="uni-section mu">
+  <div class="uni-header">
+    <span class="emoji">&#127979;</span>
+    <h2>มหาวิทยาลัยมหิดล</h2>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">พยาบาลศาสตร์ — รามาธิบดี</div>
+      <span class="badge badge-yellow">ท้าทาย</span>
+    </div>
+    <div class="prog-detail">
+      <strong>สัดส่วน:</strong> TGAT 25% + Math1 20% + Sci 25% + Eng 30%<br>
+      <strong>ส่วน A-Level:</strong> 12×0.20 + 48.8×0.25 + 43.75×0.30 = <strong>27.73</strong> (จาก 75%)<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~50.01
+    </div>
+    <div class="tip">&#128308; Math1 (12) ฉุดหนักในสัดส่วน 20% ต้อง TGAT ~85+ ถึงจะพอ</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">คณะสาธารณสุขศาสตร์ — สาขาอนามัยสิ่งแวดล้อม / อาชีวอนามัย</div>
+      <span class="badge badge-yellow">ต้องดู TGAT</span>
+    </div>
+    <div class="prog-detail">
+      ใช้ TGAT + A-Level (Bio, เคมี, Sci, Eng)<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~30-42 (บางสาขาค่อนข้างต่ำ)
+    </div>
+    <div class="tip">&#128993; สาธารณสุขมหิดลบางสาขาคะแนนไม่สูงมาก ถ้า TGAT ดีมีลุ้น</div>
+  </div>
+
+  <div class="program good">
+    <div class="prog-top">
+      <div class="prog-name">คณะสิ่งแวดล้อมและทรัพยากรศาสตร์</div>
+      <span class="badge badge-green">โอกาสดี</span>
+    </div>
+    <div class="prog-detail">
+      ใช้ TGAT + Bio + วิทย์ประยุกต์ + อังกฤษ<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~25-35
+    </div>
+    <div class="tip">&#128994; Bio สูง = จุดแข็ง สิ่งแวดล้อมมหิดลมีชื่อเสียงดี</div>
+  </div>
+
+  <div class="program good">
+    <div class="prog-top">
+      <div class="prog-name">คณะศิลปศาสตร์ — สาขาภาษาไทย</div>
+      <span class="badge badge-green">โอกาสดี</span>
+    </div>
+    <div class="prog-detail">
+      ใช้ TGAT + A-Level ไทย + อังกฤษ<br>
+      ภาษาไทย 64 (Percentile 76.2) เป็นจุดแข็ง<br>
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~30-40
+    </div>
+    <div class="tip">&#128994; มหิดลมีคณะศิลปศาสตร์ที่ดี และคะแนนตัดไม่สูงมาก</div>
+  </div>
+
+  <div class="program maybe">
+    <div class="prog-top">
+      <div class="prog-name">วิทยาลัยวิทยาศาสตร์ฯ — วิทยาการธุรกิจสุขภาพและความงาม</div>
+      <span class="badge badge-yellow">พอมีโอกาส</span>
+    </div>
+    <div class="prog-detail">
+      <strong>คะแนนต่ำสุดปี 68:</strong> ~11.50 (ต่ำมาก)<br>
+      สาขาใหม่ที่เกี่ยวข้องกับสุขภาพ + ธุรกิจ
+    </div>
+    <div class="tip">&#128994; สาขาใหม่คะแนนตัดต่ำ เป็นสายสุขภาพ + ธุรกิจ น่าสนใจ!</div>
+  </div>
+</div>
+
+<!-- สรุปรวม -->
+<div class="uni-section" style="border-top: 4px solid #2d6a9f;">
+  <h2 style="font-size:1.15em; margin-bottom:16px;">&#127942; สรุป: คณะที่มีโอกาสดีที่สุดใน 4 มหาวิทยาลัยดัง</h2>
+
+  <table style="width:100%; border-collapse: collapse; font-size:0.88em;">
+    <thead>
+      <tr style="background:#e2e8f0;">
+        <th style="padding:8px; text-align:left; border:1px solid #cbd5e0;">อันดับ</th>
+        <th style="padding:8px; text-align:left; border:1px solid #cbd5e0;">มหาวิทยาลัย</th>
+        <th style="padding:8px; text-align:left; border:1px solid #cbd5e0;">คณะ/สาขา</th>
+        <th style="padding:8px; text-align:center; border:1px solid #cbd5e0;">โอกาส</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f0fdf4;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">1</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มธ.</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">เกษตรศาสตร์ฯ (วิทย์การเกษตร/เกษตรแม่นยำ/ประมง)</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128994; ดีมาก</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">2</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มช.</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">เกษตรศาสตร์ / อุตสาหกรรมเกษตร (Food Sci)</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128994; ดีมาก</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">3</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มช.</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">สิ่งแวดล้อม / วิทยาศาสตร์สิ่งแวดล้อม</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128994; ดี</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">4</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มหิดล</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">สิ่งแวดล้อมและทรัพยากรศาสตร์</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128994; ดี</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">5</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มหิดล</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">ศิลปศาสตร์ (ภาษาไทย)</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128994; ดี</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">6</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มธ.</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">วิทยาศาสตร์ (วาริชศาสตร์ / สิ่งแวดล้อม)</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128994; ดี</td>
+      </tr>
+      <tr style="background:#f0fdf4;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">7</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มหิดล</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">วิทยาการธุรกิจสุขภาพและความงาม</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128994; ดี</td>
+      </tr>
+      <tr style="background:#fffbeb;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">8</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มธ.</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">พยาบาลศาสตร์ (ต้องดู TGAT)</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128993; ลุ้น</td>
+      </tr>
+      <tr style="background:#fffbeb;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">9</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มช.</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">วิทยาศาสตร์ (ชีววิทยา / จุลชีวฯ)</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128993; ลุ้น</td>
+      </tr>
+      <tr style="background:#fffbeb;">
+        <td style="padding:8px; border:1px solid #cbd5e0;">10</td>
+        <td style="padding:8px; border:1px solid #cbd5e0;"><strong>มหิดล</strong></td>
+        <td style="padding:8px; border:1px solid #cbd5e0;">สาธารณสุขศาสตร์ (อนามัยสิ่งแวดล้อม)</td>
+        <td style="padding:8px; text-align:center; border:1px solid #cbd5e0;">&#128993; ลุ้น</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px; padding:14px; background:#fef2f2; border-radius:10px; font-size:0.88em;">
+    <strong>&#128308; สรุปจุฬาฯ:</strong> จุฬาลงกรณ์มหาวิทยาลัยคะแนนตัดสูงที่สุด ทุกคณะที่น่าสนใจล้วนต้องการคะแนนรวม 50-85+ ด้วย Math1 (12), เคมี (17.5), ฟิสิกส์ (17) ที่ต่ำ จะยากมากที่จะแข่งขันได้ <strong>ไม่แนะนำให้เสียอันดับกับจุฬาฯ</strong> ให้ใช้อันดับกับ มธ./มช./มหิดล ที่มีโอกาสมากกว่า
+  </div>
+
+  <div style="margin-top:12px; padding:14px; background:#f0fdf4; border-radius:10px; font-size:0.88em;">
+    <strong>&#128161; คำแนะนำสำคัญ:</strong>
+    <ul style="margin-top:6px; padding-left:20px;">
+      <li>ส่งคะแนน <strong>TGAT</strong> มาให้ด้วย จะคำนวณได้แม่นยำขึ้นมาก</li>
+      <li>ใช้เครื่องมือคำนวณที่ <a href="https://monkeyeveryday.com/tcas/ranking" style="color:#22863a">MonkeyEveryday</a> หรือ <a href="https://admission.reg.cmu.ac.th" style="color:#22863a">ม.เชียงใหม่ระบบคำนวณ</a></li>
+      <li>จัดอันดับ 10 อันดับ: <strong>ผสม มธ. + มช. + มหิดล</strong> เป็นหลัก อย่าเสียอันดับให้จุฬาฯ</li>
+      <li>อย่าลืม <strong>ม.แม่ฟ้าหลวง + สบช.</strong> จากรายงานก่อนหน้า — มีโอกาสดีที่สุดในสายพยาบาล</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sources">
+  <strong>แหล่งข้อมูล:</strong><br>
+  <a href="https://assets.mytcas.com/68/T68-stat-r3_2-maxmin-24May25.pdf">MyTCAS คะแนนสูง-ต่ำ TCAS68 รอบ 3 (PDF ทางการ)</a> |
+  <a href="https://www.smartmathpro.com/score-cu/">SmartMathPro จุฬาฯ</a> |
+  <a href="https://www.smartmathpro.com/score-tu/">SmartMathPro มธ.</a> |
+  <a href="https://www.smartmathpro.com/score-cmu/">SmartMathPro มช.</a> |
+  <a href="https://www.smartmathpro.com/score-mu/">SmartMathPro มหิดล</a> |
+  <a href="https://panyasociety.com/pages/tcas67-top-10-faculty-and-minimum-score/">PanyaSociety เกณฑ์ TCAS69</a> |
+  <a href="https://www.dek-d.com/tcas/67539/">Dek-D เกณฑ์จุฬาฯ TCAS69</a><br>
+  <em>* คะแนนต่ำสุดอิงจาก TCAS68 รอบ 3 ครั้งที่ 2 (24 พ.ค. 68) คะแนนจริงปี 69 อาจเปลี่ยนแปลง</em>
+</div>
+
+</div>
+</body>
+</html>
